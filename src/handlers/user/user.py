@@ -112,10 +112,8 @@ async def handle_check_deposit(callback: CallbackQuery):
         await callback.answer(text=Messages.get_deposit_not_found(), show_alert=True)
     else:
         await callback.answer()
-        await callback.message.answer(
-            text=Messages.get_bot_activated(),
-            reply_markup=Keyboards.get_play(game_name=user.game)
-        )
+        markup = Keyboards.get_bombucks_signal() if user.game == 'bombucks' else Keyboards.get_play(game_name=user.game)
+        await callback.message.answer(text=Messages.get_bot_activated(), reply_markup=markup)
 
 
 async def handle_menu(callback: CallbackQuery):
@@ -124,6 +122,14 @@ async def handle_menu(callback: CallbackQuery):
         caption=Messages.get_welcome(callback.from_user.first_name),
         reply_markup=Keyboards.get_choose_game()
     )
+
+
+async def handle_bombucks_signal(callback: CallbackQuery):
+    await callback.answer()
+
+    signal_photo = Messages.get_bombucks_signal_photo()
+    markup = Keyboards.get_bombucks_signal()
+    await callback.message.answer_photo(photo=signal_photo, reply_markup=markup)
 
 
 # endregion
@@ -141,3 +147,6 @@ def register_user_handlers(dp: Dispatcher) -> None:
     dp.register_callback_query_handler(handle_check_registration, text='check_registration')
 
     dp.register_callback_query_handler(handle_check_deposit, text='check_deposit')
+
+    #
+    dp.register_callback_query_handler(handle_bombucks_signal, text='bombucks_signal')

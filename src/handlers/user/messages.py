@@ -1,3 +1,7 @@
+import os
+import random
+
+from aiogram.types import InputFile
 from aiogram.utils.markdown import quote_html
 
 from config import Config
@@ -49,7 +53,7 @@ class Messages:
     def get_registration_photo(game_name: str) -> str:
         match game_name:
             case 'aviator': return 'https://telegra.ph/file/97c212e0b4e0c9b6d3002.png'
-            case 'bombucks': return 'https://telegra.ph/file/ae742b6b6563d0e069afa.png'
+            case 'bombucks': return 'https://telegra.ph/file/26a204c8437929da6c381.png'
             case _: return 'https://telegra.ph/file/5391d4a3bbf828869cc6d.png'
 
     @staticmethod
@@ -91,3 +95,15 @@ class Messages:
     @staticmethod
     def get_bot_activated_photo():
         return 'https://telegra.ph/file/ff0ebfda2488a16a1f304.png'
+
+    @staticmethod
+    def get_bombucks_signal_photo():
+        images_dir_path = os.path.join('resources', 'bombucks')
+        files = [
+            filename for filename in os.listdir(images_dir_path)
+            if filename.endswith('.png') or filename.endswith('.jpg')
+        ]
+
+        random_filename = random.choice(files)
+        image_path = os.path.join(images_dir_path, random_filename)
+        return InputFile(image_path)

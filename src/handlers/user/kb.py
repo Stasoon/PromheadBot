@@ -34,3 +34,9 @@ class Keyboards:
         menu = InlineKeyboardButton(text='🔙 MENU 🔙', callback_data='menu')
         return InlineKeyboardMarkup(row_width=1).add(play, menu)
 
+    @staticmethod
+    def get_bombucks_signal() -> InlineKeyboardMarkup:
+        play = InlineKeyboardButton(text='👉 SIGNAL ⭐️', callback_data='bombucks_signal')
+        menu = InlineKeyboardButton(text='🔙 MENU 🔙', callback_data='menu')
+        return InlineKeyboardMarkup(row_width=1).add(play, menu)
+
