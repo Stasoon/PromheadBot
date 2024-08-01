@@ -27,13 +27,16 @@ class Messages:
 
     @staticmethod
     def get_welcome_photo() -> str:
-        return 'https://telegra.ph/file/baadc59be30da2f5d3057.png'
+        return 'https://telegra.ph/file/4e23d2092819f5631c33d.png'
 
     @staticmethod
     def get_registration(user_id: int, game_name: str):
         match game_name:
             case 'aviator': game_name_text = 'AVIATOR ✈️'
             case 'bombucks': game_name_text = 'BOMBUCKS 💲'
+            case 'brawl_pirates': game_name_text = 'BRAWL PIRATES ☠️'
+            case 'football_x': game_name_text = 'FOOTBALL X ⚽️️️'
+            case 'royal_mines': game_name_text = 'ROYAL MINES💣'
             case _: game_name_text = 'MINES 💣'
 
         return (
@@ -97,8 +100,8 @@ class Messages:
         return 'https://telegra.ph/file/ff0ebfda2488a16a1f304.png'
 
     @staticmethod
-    def get_bombucks_signal_photo():
-        images_dir_path = os.path.join('resources', 'bombucks')
+    def get_signal_photo(game_name: str):
+        images_dir_path = os.path.join('resources', game_name)
         files = [
             filename for filename in os.listdir(images_dir_path)
             if filename.endswith('.png') or filename.endswith('.jpg')

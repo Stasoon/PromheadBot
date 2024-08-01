@@ -11,10 +11,15 @@ class Keyboards:
 
     @staticmethod
     def get_choose_game() -> InlineKeyboardMarkup:
-        aviator = InlineKeyboardButton(text='✈️ AVIATOR ✈️', callback_data=Keyboards.game_callback.new(name='aviator'))
         mines = InlineKeyboardButton(text='⭐️ MINES ⭐️', callback_data=Keyboards.game_callback.new(name='mines'))
+        royal_mines = InlineKeyboardButton(text='💣 ROYAL MINES 💣', callback_data=Keyboards.game_callback.new(name='royal_mines'))
         bombucks = InlineKeyboardButton(text='💲 BOMBUCKS 💲', callback_data=Keyboards.game_callback.new(name='bombucks'))
-        return InlineKeyboardMarkup(row_width=2).add(aviator).row(mines, bombucks)
+
+        brawl_pirates = InlineKeyboardButton(text='☠️ BRAWL PIRATES ☠️', callback_data=Keyboards.game_callback.new(name='brawl_pirates'))
+        football_x = InlineKeyboardButton(text='⚽️ FOOTBALL X ⚽️', callback_data=Keyboards.game_callback.new(name='football_x'))
+        aviator = InlineKeyboardButton(text='✈️ AVIATOR ✈️', callback_data=Keyboards.game_callback.new(name='aviator'))
+
+        return InlineKeyboardMarkup(row_width=2).add(mines, royal_mines, bombucks,   brawl_pirates, football_x, aviator)
 
     @staticmethod
     def get_check_registration() -> InlineKeyboardMarkup:
@@ -29,14 +34,12 @@ class Keyboards:
 
     @staticmethod
     def get_play(game_name: str = 'mines') -> InlineKeyboardMarkup:
-        game_url = f'https://stasmoons.github.io/PromheadSite/{game_name}/index.html'
-        play = InlineKeyboardButton(text='👉 SIGNAL ⭐️', web_app=WebAppInfo(url=game_url))
-        menu = InlineKeyboardButton(text='🔙 MENU 🔙', callback_data='menu')
-        return InlineKeyboardMarkup(row_width=1).add(play, menu)
+        if game_name in ('aviator', 'mines'):
+            game_url = f'https://stasmoons.github.io/PromheadSite/{game_name}/index.html'
+            play = InlineKeyboardButton(text='👉 SIGNAL ⭐️', web_app=WebAppInfo(url=game_url))
+        else:
+            play = InlineKeyboardButton(text='👉 SIGNAL ⭐️', callback_data='signal')
 
-    @staticmethod
-    def get_bombucks_signal() -> InlineKeyboardMarkup:
-        play = InlineKeyboardButton(text='👉 SIGNAL ⭐️', callback_data='bombucks_signal')
         menu = InlineKeyboardButton(text='🔙 MENU 🔙', callback_data='menu')
         return InlineKeyboardMarkup(row_width=1).add(play, menu)
 

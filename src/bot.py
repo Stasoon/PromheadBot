@@ -9,7 +9,7 @@ from src.utils import logger
 
 
 async def on_startup(_):
-    await bot.set_my_commands(commands=[BotCommand('/game', 'Change game')])
+    # await bot.set_my_commands(commands=[BotCommand('/game', 'Change game')])
 
     # Регистрация фильтров
     register_all_filters(dp)

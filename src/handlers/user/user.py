@@ -64,9 +64,10 @@ async def handle_game(callback: CallbackQuery, callback_data: Keyboards.game_cal
 
     user_deposit = OneWinDeposit.get_or_none(sub1=callback.from_user.id)
     if user_deposit:
+        markup = Keyboards.get_play(game_name=user.game)
         await callback.message.answer(
             text='Click the <b>SIGNALS</b> button and start earning money!',
-            reply_markup=Keyboards.get_play(game_name=user.game)
+            reply_markup=markup
         )
         return
 
@@ -112,11 +113,12 @@ async def handle_check_deposit(callback: CallbackQuery):
         await callback.answer(text=Messages.get_deposit_not_found(), show_alert=True)
     else:
         await callback.answer()
-        markup = Keyboards.get_bombucks_signal() if user.game == 'bombucks' else Keyboards.get_play(game_name=user.game)
+        markup = Keyboards.get_play(game_name=user.game)
         await callback.message.answer(text=Messages.get_bot_activated(), reply_markup=markup)
 
 
 async def handle_menu(callback: CallbackQuery):
+    await callback.answer()
     await callback.message.answer_photo(
         photo=Messages.get_welcome_photo(),
         caption=Messages.get_welcome(callback.from_user.first_name),
@@ -124,11 +126,12 @@ async def handle_menu(callback: CallbackQuery):
     )
 
 
-async def handle_bombucks_signal(callback: CallbackQuery):
+async def handle_signal(callback: CallbackQuery):
     await callback.answer()
 
-    signal_photo = Messages.get_bombucks_signal_photo()
-    markup = Keyboards.get_bombucks_signal()
+    user = users.get_user_or_none(telegram_id=callback.from_user.id)
+    signal_photo = Messages.get_signal_photo(game_name=user.game)
+    markup = Keyboards.get_play(game_name=user.game)
     await callback.message.answer_photo(photo=signal_photo, reply_markup=markup)
 
 
@@ -149,4 +152,5 @@ def register_user_handlers(dp: Dispatcher) -> None:
     dp.register_callback_query_handler(handle_check_deposit, text='check_deposit')
 
     #
-    dp.register_callback_query_handler(handle_bombucks_signal, text='bombucks_signal')
+    dp.register_callback_query_handler(handle_signal, text='signal')
+
